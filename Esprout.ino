@@ -41,7 +41,7 @@ void handleNotFound(){
 void setup() {
   // put your setup code here, to run once:
   WiFi.softAPConfig(local_IP, gateway, subnet);
-  WiFi.softAP("LeEssePet", "motdepasse");
+  WiFi.softAP("ClubDesBG");
   server.on("/", handleRoot);
   server.on("/inline", [](){
     server.send(200, "text/html", "this works as well");
