@@ -2,25 +2,65 @@
 #include <ESP8266WiFi.h>
 
 ESP8266WebServer server(80);
-
+/*
 IPAddress local_IP(192, 168,1,1);
 IPAddress gateway(192,168,1,1);
 IPAddress subnet(255, 255, 255, 0);
+*/
 
-String texte = "<h1>Le club des BG</h1> <p>ERREUR : Acces Interdit, vous n'etes pas un bg</p>\
+#define THEWIFISSID "Livebox-E256"
+#define THEWIFIPWD "conotrux29helpu"
+
+String texteBase = "<h1>Le club des BG</h1>\
+<a href=\"/merde\">Merde</a>\
+<p>ERREUR : Acces Interdit, vous n'etes pas un bg</p>\
 <form action=\"/\" method=\"post\">\
 Message: <br>\
 <input type=\"text\" name=\"message\"><br>\
 <input type=\"submit\" value=\"submit\">\
-</form>\n";
-  
+</form>";
+
+String adminHTML = "<h1>Controle de BG</h1>\
+<a href=\"/\" >Chat</a> <br>\
+<a href=\"/merde\"> Merde</a>\
+<form action=\"/lebgducul\" method=\"post\">\
+Merde: <br>\
+<textarea name=\"merde\" cols=\"80\" rows=\"40\"></textarea><br>\
+<input type=\"submit\" value=\"submit\">\
+</form>\
+<form action=\"/lebgducul\" method=\"post\">\
+<button name=\"menage\" value=\"oui\">Nettoyer le chat</button>\
+</form>";
+
+String chat;
+String merde = "Rien ici... Pour l'instant...";
+
 void handleRoot() {
 
   if (server.args() > 0)
   {
-    texte = texte + "<p>" + server.arg(0) + "</p>\n ----- \n";
+    chat = chat + "<p>" + server.arg(0) + "</p>\n ----- \n";
   }
-  server.send(4000, "text/html", texte);
+  server.send(5000, "text/html", texteBase + chat);
+}
+
+void handleMerde () {
+  server.send(5000, "text/html", merde);
+}
+
+void handleAdmin () {
+  if (server.args() > 0)
+  {
+    if (server.argName(0) == "menage")
+    {
+      chat = "";
+    }
+    if (server.argName(0) == "merde")
+    {
+      merde = server.arg(0);
+    }
+  }
+  server.send(2000, "text/html", adminHTML);
 }
 
 void handleNotFound(){
@@ -40,8 +80,21 @@ void handleNotFound(){
 
 void setup() {
   // put your setup code here, to run once:
+  /*
   WiFi.softAPConfig(local_IP, gateway, subnet);
   WiFi.softAP("ClubDesBG");
+  */
+  Serial.begin(9600);
+  WiFi.mode(WIFI_STA);
+  // CHANGEME 
+  WiFi.begin(THEWIFISSID, THEWIFIPWD);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println(WiFi.localIP());
+  server.on("/lebgducul", handleAdmin);
+  server.on("/merde", handleMerde);
   server.on("/", handleRoot);
   server.on("/inline", [](){
     server.send(200, "text/html", "this works as well");
