@@ -15,10 +15,12 @@ String texteBase = "<h1>Le club des BG</h1>\
 <a href=\"/merde\">Merde</a>\
 <p>ERREUR : Acces Interdit, vous n'etes pas un bg</p>\
 <form action=\"/\" method=\"post\">\
-Message: <br>\
-<input type=\"text\" name=\"message\"><br>\
+URL de l'image : <br>\
+<input type=\"url\" name=\"image\"> <br>\
+Message : <br>\
+<textarea name=\"message\" cols=\"60\" rows=\"4\"></textarea><br>\
 <input type=\"submit\" value=\"submit\">\
-</form>";
+</form><hr>";
 
 String adminHTML = "<h1>Controle de BG</h1>\
 <a href=\"/\" >Chat</a> <br>\
@@ -35,11 +37,35 @@ Merde: <br>\
 String chat;
 String merde = "Rien ici... Pour l'instant...";
 
-void handleRoot() {
+int nbMsg = 0;
 
+void handleRoot() {
   if (server.args() > 0)
   {
-    chat = chat + "<p>" + server.arg(0) + "</p>\n ----- \n";
+    ++nbMsg;
+    if (nbMsg % 20 == 0)
+    {
+      chat = "";
+    }
+    String msg;
+    String imgURL;
+    String imgHTML;
+    for (int i=0; i < server.args(); ++i)
+    {
+      if (server.argName(i) == "message")
+      {
+        msg = server.arg(i);
+      }
+      if (server.argName(i) == "image")
+      {
+        imgURL = server.arg(i);
+      }
+    }
+    
+    msg.replace("<", "&lt");
+    msg.replace(">", "&gt");
+    imgHTML = (imgURL.length() == 0) ? "" : "<img src=\"" + imgURL + "\" height=\"200\" width=\"200\"> ";
+    chat = chat + "<b>N*" + nbMsg + "</b><br>" + imgHTML+ "<pre>" + msg + "</pre> <hr>";
   }
   server.send(5000, "text/html", texteBase + chat);
 }
