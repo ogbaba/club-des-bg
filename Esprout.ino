@@ -64,6 +64,8 @@ void handleRoot() {
     
     msg.replace("<", "&lt");
     msg.replace(">", "&gt");
+    imgURL.replace("<", "&lt");
+    imgURL.replace(">", "&gt");
     imgHTML = (imgURL.length() == 0) ? "" : "<img src=\"" + imgURL + "\" height=\"200\" width=\"200\"> ";
     chat = chat + "<b>N*" + nbMsg + "</b><br>" + imgHTML+ "<pre>" + msg + "</pre> <hr>";
   }
