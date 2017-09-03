@@ -82,6 +82,7 @@ void handleAdmin () {
     if (server.argName(0) == "menage")
     {
       chat = "";
+      nbMsg = 0;
     }
     if (server.argName(0) == "merde")
     {
