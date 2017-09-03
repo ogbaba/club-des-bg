@@ -1,5 +1,6 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266WiFi.h>
+#include "mdp.h"
 
 ESP8266WebServer server(80);
 /*
@@ -7,7 +8,7 @@ IPAddress local_IP(192, 168,1,1);
 IPAddress gateway(192,168,1,1);
 IPAddress subnet(255, 255, 255, 0);
 */
-
+//#define ADMIN_URL "url"
 #define THEWIFISSID "Livebox-E256"
 #define THEWIFIPWD "conotrux29helpu"
 
@@ -25,12 +26,12 @@ Message : <br>\
 String adminHTML = "<h1>Controle de BG</h1>\
 <a href=\"/\" >Chat</a> <br>\
 <a href=\"/merde\"> Merde</a>\
-<form action=\"/lebgducul\" method=\"post\">\
+<form action=\"/"ADMIN_URL"\" method=\"post\">\
 Merde: <br>\
 <textarea name=\"merde\" cols=\"80\" rows=\"40\"></textarea><br>\
 <input type=\"submit\" value=\"submit\">\
 </form>\
-<form action=\"/lebgducul\" method=\"post\">\
+<form action=\"/"ADMIN_URL"\" method=\"post\">\
 <button name=\"menage\" value=\"oui\">Nettoyer le chat</button>\
 </form>";
 
@@ -123,7 +124,7 @@ void setup() {
     Serial.print(".");
   }
   Serial.println(WiFi.localIP());
-  server.on("/lebgducul", handleAdmin);
+  server.on("/"ADMIN_URL, handleAdmin);
   server.on("/merde", handleMerde);
   server.on("/", handleRoot);
   server.on("/inline", [](){
