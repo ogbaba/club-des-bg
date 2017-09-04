@@ -12,7 +12,10 @@ IPAddress subnet(255, 255, 255, 0);
 #define THEWIFISSID "Livebox-E256"
 #define THEWIFIPWD "conotrux29helpu"
 
-String texteBase = "<h1>Le club des BG</h1>\
+String texteBase = "<h1>&#128023; Le club des BG &#128023; </h1>\
+<form action=\"/\">\
+<input type=\"submit\" style=\"height:50px;width:100px\" value=\"Rafraichir\" />\
+</form>\
 <a href=\"/merde\">Merde</a>\
 <p>ERREUR : Acces Interdit, vous n'etes pas un bg</p>\
 <form action=\"/\" method=\"post\">\
