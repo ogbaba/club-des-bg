@@ -71,11 +71,11 @@ void handleRoot() {
     imgHTML = (imgURL.length() == 0) ? "" : "<img src=\"" + imgURL + "\" height=\"200\" width=\"200\"> ";
     chat = chat + "<b>N*" + nbMsg + "</b><br>" + imgHTML+ "<pre>" + msg + "</pre> <hr>";
   }
-  server.send(5000, "text/html", texteBase + chat);
+  server.send(200, "text/html", texteBase + chat);
 }
 
 void handleMerde () {
-  server.send(5000, "text/html", merde);
+  server.send(200, "text/html", merde);
 }
 
 void handleAdmin () {
@@ -91,7 +91,7 @@ void handleAdmin () {
       merde = server.arg(0);
     }
   }
-  server.send(2000, "text/html", adminHTML);
+  server.send(200, "text/html", adminHTML);
 }
 
 void handleNotFound(){
