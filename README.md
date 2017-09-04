@@ -1,7 +1,13 @@
-# Site de chat (blabla, pas l'animal) pour l'ESP8266
+# Planche d'image chat (blabla, pas l'animal) pour l'ESP8266
 
 C'est de l'Arduino mais pour l'ESP8266.
-Le programme se connecte à un point d'accès IL FAUT MODIFIER LE CODE SOURCE.
+Le programme se connecte à un point d'accès IL FAUT MODIFIER LE CODE SOURCE POUR CHANGER :
+- url de la page d'admin
+- ssid et mdp du point d'accès
+
+
 Vous pouvez modifier le programme pour créer un point d'accès en décommentant des trucs et en en commentant d'autres.
-Pour voir le site de chat, accédez à l'adresse 192.168.1.1 (par défaut) depuis un navigateur web.
+
+Amusez vous bien :)
+
 
