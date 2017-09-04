@@ -9,10 +9,13 @@ IPAddress gateway(192,168,1,1);
 IPAddress subnet(255, 255, 255, 0);
 */
 //#define ADMIN_URL "url"
-#define THEWIFISSID "Livebox-E256"
-#define THEWIFIPWD "conotrux29helpu"
+//#define THEWIFISSID "ssid"
+//#define THEWIFIPWD "mdp"
 
-String texteBase = "<h1>&#128023; Le club des BG &#128023; </h1>\
+String texteBase = "<style>\
+img {width : auto; max-height: 200px;}\
+</style>\
+<h1>&#128023; Le club des BG &#128023; </h1>\
 <form action=\"/\">\
 <input type=\"submit\" style=\"height:50px;width:100px\" value=\"Rafraichir\" />\
 </form>\
@@ -76,7 +79,9 @@ void handleMessage () {
     imgURL.replace("<", "&lt;");
     imgURL.replace(">", "&gt;");
     imgURL.replace("\"", "&quot;");
-    imgHTML = (imgURL.length() == 0) ? "" : "<img src=\"" + imgURL + "\" height=\"200\" width=\"200\"> ";
+    imgHTML = (imgURL.length() == 0) ? "" : "<img src=\"" +
+    imgURL + 
+    "\" height=\"200\" width=\"200\"> ";
     chat = chat + "<b>N*" + nbMsg + "</b><br>" + imgHTML+ "<pre>" + msg + "</pre> <hr>";
   }
   server.sendHeader("Location","/");
