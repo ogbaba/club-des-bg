@@ -18,7 +18,7 @@ String texteBase = "<h1>&#128023; Le club des BG &#128023; </h1>\
 </form>\
 <a href=\"/merde\">Merde</a>\
 <p>ERREUR : Acces Interdit, vous n'etes pas un bg</p>\
-<form action=\"/\" method=\"post\">\
+<form action=\"/msg\" method=\"post\">\
 URL de l'image : <br>\
 <input type=\"url\" name=\"image\"> <br>\
 Message : <br>\
@@ -44,6 +44,11 @@ String merde = "Rien ici... Pour l'instant...";
 int nbMsg = 0;
 
 void handleRoot() {
+
+  server.send(200, "text/html", texteBase + chat);
+}
+
+void handleMessage () {
   if (server.args() > 0)
   {
     ++nbMsg;
@@ -74,7 +79,8 @@ void handleRoot() {
     imgHTML = (imgURL.length() == 0) ? "" : "<img src=\"" + imgURL + "\" height=\"200\" width=\"200\"> ";
     chat = chat + "<b>N*" + nbMsg + "</b><br>" + imgHTML+ "<pre>" + msg + "</pre> <hr>";
   }
-  server.send(200, "text/html", texteBase + chat);
+  server.sendHeader("Location","/");
+  server.send(303);
 }
 
 void handleMerde () {
@@ -130,6 +136,7 @@ void setup() {
   server.on("/"ADMIN_URL, handleAdmin);
   server.on("/merde", handleMerde);
   server.on("/", handleRoot);
+  server.on("/msg", handleMessage);
   server.on("/inline", [](){
     server.send(200, "text/html", "this works as well");
   });
