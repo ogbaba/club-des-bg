@@ -18,7 +18,10 @@ struct timespec *tp;
 
 String texteBase = "<style>\
 img {width : auto; max-height: 200px;}\
+#ecriture {text-align: center;}\
+body { background-color : Lavender; font-size: 150%;}\
 </style>\
+<div id=\"ecriture\">\
 <h1>&#128023; Le club des BG &#128023; </h1>\
 <form action=\"/\">\
 <input type=\"submit\" style=\"height:50px;width:100px\" value=\"Rafraichir\" />\
@@ -31,7 +34,7 @@ URL de l'image : <br>\
 Message : <br>\
 <textarea name=\"message\" maxlength=\"500\" cols=\"60\" rows=\"4\"></textarea><br>\
 <input type=\"submit\" value=\"submit\">\
-</form><hr>";
+</form></div><hr>";
 
 String adminHTML = "<h1>Controle de BG</h1>\
 <a href=\"/\" >Chat</a> <br>\
@@ -66,7 +69,7 @@ NTPClient timeClient(ntpUDP);
 
 void handleRoot() {
 
-  server.send(200, "text/html", texteBase + epingle + "<hr>" + chat);
+  server.send(200, "text/html", "<body>" + texteBase + epingle + "<hr>" + chat + "</body>");
 }
 
 void handleMessage () {
