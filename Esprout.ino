@@ -1,5 +1,7 @@
+#include <NTPClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266WiFi.h>
+#include <WiFiUdp.h>
 #include "mdp.h"
 
 ESP8266WebServer server(80);
@@ -11,6 +13,8 @@ IPAddress subnet(255, 255, 255, 0);
 //#define ADMIN_URL "url"
 //#define THEWIFISSID "ssid"
 //#define THEWIFIPWD "mdp"
+
+struct timespec *tp;
 
 String texteBase = "<style>\
 img {width : auto; max-height: 200px;}\
@@ -39,16 +43,29 @@ Merde: <br>\
 </form>\
 <form action=\"/"ADMIN_URL"\" method=\"post\">\
 <button name=\"menage\" value=\"oui\">Nettoyer le chat</button>\
+</form>\
+<form>Message Admin : <br>\
+<textarea name=\"msgAdmin\" cols=\"60\" rows=\"4\"></textarea><br>\
+<input type=\"submit\" value=\"submit\">\
+</form>\
+<form>Epingle : <br>\
+<textarea name=\"epingle\" cols=\"60\" rows=\"4\"></textarea><br>\
+<input type=\"submit\" value=\"submit\">\
 </form>";
 
 String chat;
 String merde = "Rien ici... Pour l'instant...";
+String epingle;
 
 int nbMsg = 0;
 
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP);
+
+
 void handleRoot() {
 
-  server.send(200, "text/html", texteBase + chat);
+  server.send(200, "text/html", texteBase + epingle + "<hr>" + chat);
 }
 
 void handleMessage () {
@@ -82,7 +99,11 @@ void handleMessage () {
     imgHTML = (imgURL.length() == 0) ? "" : "<img src=\"" +
     imgURL + 
     "\" height=\"200\" width=\"200\"> ";
-    chat = chat + "<b>N*" + nbMsg + "</b><br>" + imgHTML+ "<pre>" + msg + "</pre> <hr>";
+    //TEMPS
+      timeClient.update();
+
+    chat = chat + "<b>N*" + nbMsg + " " + timeClient.getFormattedTime() + 
+    "</b><br>" + imgHTML+ "<pre>" + msg + "</pre> <hr>";
   }
   server.sendHeader("Location","/");
   server.send(303);
@@ -97,12 +118,24 @@ void handleAdmin () {
   {
     if (server.argName(0) == "menage")
     {
-      chat = "";
-      nbMsg = 0;
+      chat = "<b style=\"color:red;\" >MESSAGES ADMINISTRES</b> <hr>";
     }
     if (server.argName(0) == "merde")
     {
       merde = server.arg(0);
+    }
+    if (server.argName(0) == "msgAdmin")
+    {
+      ++nbMsg;
+      String msg = server.arg(0);
+      msg.replace("<", "&lt");
+      msg.replace(">", "&gt");
+      chat = chat + "<b>N*" + nbMsg + " " + timeClient.getFormattedTime() + 
+    " ADMIN</b><br> <p style=\"color:red;\">" + server.arg(0) + "</p> <hr>";
+    }
+    if (server.argName(0) == "epingle")
+    {
+      epingle = server.arg(0);
     }
   }
   server.send(200, "text/html", adminHTML);
@@ -137,6 +170,9 @@ void setup() {
     delay(500);
     Serial.print(".");
   }
+  //TEMPS
+  timeClient.begin();
+  timeClient.setTimeOffset(60*60*2);
   Serial.println(WiFi.localIP());
   server.on("/"ADMIN_URL, handleAdmin);
   server.on("/merde", handleMerde);
