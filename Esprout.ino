@@ -29,7 +29,7 @@ img {width : auto; max-height: 200px;}\
 URL de l'image : <br>\
 <input type=\"url\" name=\"image\"> <br>\
 Message : <br>\
-<textarea name=\"message\" cols=\"60\" rows=\"4\"></textarea><br>\
+<textarea name=\"message\" maxlength=\"500\" cols=\"60\" rows=\"4\"></textarea><br>\
 <input type=\"submit\" value=\"submit\">\
 </form><hr>";
 
@@ -57,7 +57,8 @@ String chat;
 String merde = "Rien ici... Pour l'instant...";
 String epingle;
 
-int nbMsg = 0;
+int nbMsgAff = 0;
+int nbMsgReel = 0;
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
@@ -71,9 +72,11 @@ void handleRoot() {
 void handleMessage () {
   if (server.args() > 0)
   {
-    ++nbMsg;
-    if (nbMsg % 20 == 0)
+    ++nbMsgReel;
+    ++nbMsgAff;
+    if (nbMsgAff > 20)
     {
+      nbMsgAff = 0;
       chat = "";
     }
     String msg;
@@ -83,10 +86,12 @@ void handleMessage () {
     {
       if (server.argName(i) == "message")
       {
+        if (server.argName(i).length() > 550) tropGros();
         msg = server.arg(i);
       }
       if (server.argName(i) == "image")
       {
+        if (server.argName(i).length() > 220) tropGros();
         imgURL = server.arg(i);
       }
     }
@@ -102,7 +107,7 @@ void handleMessage () {
     //TEMPS
       timeClient.update();
 
-    chat = chat + "<b>N*" + nbMsg + " " + timeClient.getFormattedTime() + 
+    chat = chat + "<b>N*" + nbMsgReel + " " + timeClient.getFormattedTime() + 
     "</b><br>" + imgHTML+ "<pre>" + msg + "</pre> <hr>";
   }
   server.sendHeader("Location","/");
@@ -113,11 +118,16 @@ void handleMerde () {
   server.send(200, "text/html", merde);
 }
 
+void tropGros(){
+  server.send(413,"text/html", "Trop gros mon ami");
+}
+
 void handleAdmin () {
   if (server.args() > 0)
   {
     if (server.argName(0) == "menage")
     {
+      nbMsgAff = 0;
       chat = "<b style=\"color:red;\" >MESSAGES ADMINISTRES</b> <hr>";
     }
     if (server.argName(0) == "merde")
@@ -126,11 +136,11 @@ void handleAdmin () {
     }
     if (server.argName(0) == "msgAdmin")
     {
-      ++nbMsg;
+      ++nbMsgReel;
       String msg = server.arg(0);
       msg.replace("<", "&lt");
       msg.replace(">", "&gt");
-      chat = chat + "<b>N*" + nbMsg + " " + timeClient.getFormattedTime() + 
+      chat = chat + "<b>N*" + nbMsgReel + " " + timeClient.getFormattedTime() + 
     " ADMIN</b><br> <p style=\"color:red;\">" + server.arg(0) + "</p> <hr>";
     }
     if (server.argName(0) == "epingle")
