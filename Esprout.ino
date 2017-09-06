@@ -30,7 +30,7 @@ body { background-color : Lavender; font-size: 150%;}\
 <p>ERREUR : Acces Interdit, vous n'etes pas un bg</p>\
 <form action=\"/msg\" method=\"post\">\
 URL de l'image : <br>\
-<input type=\"url\" name=\"image\"> <br>\
+<input type=\"url\" maxlength=\"200\" name=\"image\"> <br>\
 Message : <br>\
 <textarea name=\"message\" maxlength=\"500\" cols=\"60\" rows=\"4\"></textarea><br>\
 <input type=\"submit\" value=\"submit\">\
@@ -75,8 +75,6 @@ void handleRoot() {
 void handleMessage () {
   if (server.args() > 0)
   {
-    ++nbMsgReel;
-    ++nbMsgAff;
     verifTailleMsgs();
     String msg;
     String imgURL;
@@ -107,6 +105,11 @@ void handleMessage () {
     imgURL.replace("<", "&lt;");
     imgURL.replace(">", "&gt;");
     imgURL.replace("\"", "&quot;");
+    if ((imgURL.length() == 0) && (msg.length() == 0))
+    {
+      server.send(200, "text/html", "<b>Message trop court...</b>");
+      return;
+    }
     imgHTML = (imgURL.length() == 0) ? "" : "<img src=\"" +
     imgURL + 
     "\" height=\"200\" width=\"200\"> ";
@@ -116,6 +119,9 @@ void handleMessage () {
     chat = chat + "<b>N*" + nbMsgReel + " " + timeClient.getFormattedTime() + 
     "</b><br>" + imgHTML+ "<pre>" + msg + "</pre> <hr>";
   }
+  
+  ++nbMsgReel;
+  ++nbMsgAff;
   server.sendHeader("Location","/");
   server.send(303);
 }
