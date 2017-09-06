@@ -77,11 +77,7 @@ void handleMessage () {
   {
     ++nbMsgReel;
     ++nbMsgAff;
-    if (nbMsgAff > 20)
-    {
-      nbMsgAff = 0;
-      chat = "";
-    }
+    verifTailleMsgs();
     String msg;
     String imgURL;
     String imgHTML;
@@ -89,12 +85,19 @@ void handleMessage () {
     {
       if (server.argName(i) == "message")
       {
-        if (server.argName(i).length() > 550) tropGros();
+        if (server.argName(i).length() > 550) 
+        {
+          tropGros();
+          return;
+        }
         msg = server.arg(i);
       }
       if (server.argName(i) == "image")
       {
-        if (server.argName(i).length() > 220) tropGros();
+        if (server.argName(i).length() > 220){
+          tropGros();
+          return;
+        }
         imgURL = server.arg(i);
       }
     }
@@ -115,6 +118,14 @@ void handleMessage () {
   }
   server.sendHeader("Location","/");
   server.send(303);
+}
+
+void verifTailleMsgs () {
+    if (nbMsgAff >= 20)
+    {
+      nbMsgAff = 0;
+      chat = "";
+    }
 }
 
 void handleMerde () {
@@ -139,7 +150,9 @@ void handleAdmin () {
     }
     if (server.argName(0) == "msgAdmin")
     {
+      ++nbMsgAff;
       ++nbMsgReel;
+      verifTailleMsgs();
       String msg = server.arg(0);
       msg.replace("<", "&lt");
       msg.replace(">", "&gt");
