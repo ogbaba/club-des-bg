@@ -33,7 +33,7 @@ URL de l'image : <br>\
 <input type=\"url\" maxlength=\"200\" name=\"image\"> <br>\
 Message : <br>\
 <textarea name=\"message\" maxlength=\"500\" cols=\"60\" rows=\"4\"></textarea><br>\
-<input type=\"submit\" value=\"submit\">\
+<input type=\"submit\" value=\"Envoyer\">\
 </form></div><hr>";
 
 String adminHTML = "<h1>Controle de BG</h1>\
@@ -42,18 +42,18 @@ String adminHTML = "<h1>Controle de BG</h1>\
 <form action=\"/"ADMIN_URL"\" method=\"post\">\
 Merde: <br>\
 <textarea name=\"merde\" cols=\"80\" rows=\"40\"></textarea><br>\
-<input type=\"submit\" value=\"submit\">\
+<input type=\"submit\" value=\"Envoyer\">\
 </form>\
 <form action=\"/"ADMIN_URL"\" method=\"post\">\
 <button name=\"menage\" value=\"oui\">Nettoyer le chat</button>\
 </form>\
 <form>Message Admin : <br>\
 <textarea name=\"msgAdmin\" cols=\"60\" rows=\"4\"></textarea><br>\
-<input type=\"submit\" value=\"submit\">\
+<input type=\"submit\" value=\"Envoyer\">\
 </form>\
 <form>Epingle : <br>\
 <textarea name=\"epingle\" cols=\"60\" rows=\"4\"></textarea><br>\
-<input type=\"submit\" value=\"submit\">\
+<input type=\"submit\" value=\"Envoyer\">\
 </form>";
 
 String chat;
@@ -115,13 +115,13 @@ void handleMessage () {
     "\" height=\"200\" width=\"200\"> ";
     //TEMPS
       timeClient.update();
-
+    
     chat = chat + "<b>N*" + nbMsgReel + " " + timeClient.getFormattedTime() + 
-    "</b><br>" + imgHTML+ "<pre>" + msg + "</pre> <hr>";
+    "</b><br>" + imgHTML+ "<pre>" + msg + "</pre> <hr>";    
+    ++nbMsgReel;
+    ++nbMsgAff;
   }
   
-  ++nbMsgReel;
-  ++nbMsgAff;
   server.sendHeader("Location","/");
   server.send(303);
 }
@@ -156,14 +156,14 @@ void handleAdmin () {
     }
     if (server.argName(0) == "msgAdmin")
     {
-      ++nbMsgAff;
-      ++nbMsgReel;
       verifTailleMsgs();
       String msg = server.arg(0);
       msg.replace("<", "&lt");
       msg.replace(">", "&gt");
       chat = chat + "<b>N*" + nbMsgReel + " " + timeClient.getFormattedTime() + 
-    " ADMIN</b><br> <p style=\"color:red;\">" + server.arg(0) + "</p> <hr>";
+    " ADMIN</b><br> <p style=\"color:red;\">" + server.arg(0) + "</p> <hr>";    
+      ++nbMsgAff;
+      ++nbMsgReel;
     }
     if (server.argName(0) == "epingle")
     {
