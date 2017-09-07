@@ -1,12 +1,22 @@
-# Planche d'image chat (blabla, pas l'animal) pour l'ESP8266
+# Planche de discussion imagée pour l'ESP8266
 
 C'est de l'Arduino mais pour l'ESP8266.
 Le programme se connecte à un point d'accès IL FAUT MODIFIER LE CODE SOURCE POUR CHANGER :
 - url de la page d'admin
 - ssid et mdp du point d'accès
 
+Fonctionnalités utilisateur :
+- Écriture de messages et ajouts d'URL vers des images externes
+- Horodatage des messages
+- Effacement des messages après 20 messages
+- Numéro des messages
 
-Vous pouvez modifier le programme pour créer un point d'accès en décommentant des trucs et en en commentant d'autres.
+Fonctionnalités admin :
+- Accès à une page d'administration
+- Modification de la page merde
+- Suppression des messages actuels
+- Ajout de message html épinglé
+- Écriture de messages admin
 
 Amusez vous bien :)
 
