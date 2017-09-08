@@ -62,6 +62,11 @@ Merde: <br>\
 <input type=\"submit\" value=\"Envoyer\">\
 </form>";
 
+String header = "<head>\
+<title>Club des BG</title>\
+<meta charset=\"UTF-8\">\
+</head>";
+
 String chat;
 String merde = "Rien ici... Pour l'instant...";
 String epingle;
@@ -74,8 +79,8 @@ NTPClient timeClient(ntpUDP);
 
 
 void handleRoot() {
-
-  server.send(200, "text/html", "<body>" + texteBase + epingle + "<hr>" + chat + "</body>");
+  server.send(200, "text/html", "<!DOCTYPE html>" + header + "<body>" +
+  texteBase + epingle + "<hr>" + chat + "</body></html>");
 }
 
 void handleMessage () {
