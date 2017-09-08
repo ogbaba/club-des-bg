@@ -33,7 +33,7 @@ body { background-color : Lavender; font-size: 150%;}\
 <input type=\"submit\" style=\"height:50px;width:100px\" value=\"Rafraichir\" />\
 </form>\
 <a href=\"/merde\">Merde</a>\
-<p>ERREUR : Acces Interdit, vous n'etes pas un bg</p>\
+<p>ERREUR : Accès Interdit, vous n'etes pas un bg</p>\
 <form action=\"/msg\" method=\"post\">\
 URL de l'image : <br>\
 <input type=\"url\" maxlength=\"200\" name=\"image\"> <br>\
@@ -229,9 +229,6 @@ void setup() {
   server.on("/merde", handleMerde);
   server.on("/", handleRoot);
   server.on("/msg", handleMessage);
-  server.on("/inline", [](){
-    server.send(200, "text/html", "this works as well");
-  });
   server.onNotFound(handleNotFound);
   server.begin();
   Serial.println("HTTP server started");
