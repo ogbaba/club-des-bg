@@ -2,6 +2,7 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
+#include "img.h"
 #include "mdp.h"
 
 ESP8266WebServer server(80);
@@ -19,7 +20,12 @@ struct timespec *tp;
 String texteBase = "<style>\
 img {width : auto; max-height: 200px;}\
 #ecriture {text-align: center;}\
+.hop, .leon, .poivron, .fleon{ width : 16px; height : 16px; display : inline-block;}\
 body { background-color : Lavender; font-size: 150%;}\
+.poivron { background-image : url("POIVRON");}\
+.hop { background-image : url("HOP");}\
+.leon { background-image : url("LEON");}\
+.fleon { background-image : url("FLEON");}\
 </style>\
 <div id=\"ecriture\">\
 <h1>&#128023; Le club des BG &#128023; </h1>\
@@ -100,8 +106,7 @@ void handleMessage () {
       }
     }
     
-    msg.replace("<", "&lt");
-    msg.replace(">", "&gt");
+    msg = formatMsg (msg);
     imgURL.replace("<", "&lt;");
     imgURL.replace(">", "&gt;");
     imgURL.replace("\"", "&quot;");
@@ -124,6 +129,16 @@ void handleMessage () {
   
   server.sendHeader("Location","/");
   server.send(303);
+}
+
+String formatMsg (String msg) {
+    msg.replace("<", "&lt");
+    msg.replace(">", "&gt");
+    msg.replace(":hop:","<div class=\"hop\"></div>");
+    msg.replace(":leon:","<div class=\"leon\"></div>");
+    msg.replace(":fleon:","<div class=\"fleon\"></div>");
+    msg.replace(":poivron:","<div class=\"poivron\"></div>");
+    return msg;
 }
 
 void verifTailleMsgs () {
@@ -158,8 +173,7 @@ void handleAdmin () {
     {
       verifTailleMsgs();
       String msg = server.arg(0);
-      msg.replace("<", "&lt");
-      msg.replace(">", "&gt");
+      msg = formatMsg(msg);
       chat = chat + "<b>N*" + nbMsgReel + " " + timeClient.getFormattedTime() + 
     " ADMIN</b><br> <p style=\"color:red;\">" + server.arg(0) + "</p> <hr>";    
       ++nbMsgAff;
