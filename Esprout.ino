@@ -17,7 +17,11 @@ IPAddress subnet(255, 255, 255, 0);
 
 struct timespec *tp;
 
-String texteBase = "<style>\
+
+String header = "<head>\
+<title>Club des BG</title>\
+<meta charset=\"UTF-8\">\
+<style>\
 img {width : auto; max-height: 200px;}\
 #ecriture {text-align: center;}\
 .hop, .leon, .poivron, .fleon{ width : 16px; height : 16px; display : inline-block;}\
@@ -27,7 +31,9 @@ body { background-color : Lavender; font-size: 150%;}\
 .leon { background-image : url("LEON");}\
 .fleon { background-image : url("FLEON");}\
 </style>\
-<div id=\"ecriture\">\
+</head>";
+
+String texteBase = "<div id=\"ecriture\">\
 <h1>&#128023; Le club des BG &#128023; </h1>\
 <form action=\"/\">\
 <input type=\"submit\" style=\"height:50px;width:100px\" value=\"Rafraichir\" />\
@@ -62,10 +68,6 @@ Merde: <br>\
 <input type=\"submit\" value=\"Envoyer\">\
 </form>";
 
-String header = "<head>\
-<title>Club des BG</title>\
-<meta charset=\"UTF-8\">\
-</head>";
 
 String chat;
 String merde = "Rien ici... Pour l'instant...";
