@@ -191,7 +191,7 @@ void handleAdmin () {
       epingle = server.arg(0);
     }
   }
-  server.send(200, "text/html", adminHTML);
+  server.send(200, "text/html","<!DOCTYPE html><html>" + header + "<body>" + adminHTML + "</body></html>");
 }
 
 void handleNotFound(){

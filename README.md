@@ -10,6 +10,7 @@ Fonctionnalités utilisateur :
 - Horodatage des messages
 - Effacement des messages après 20 messages
 - Numéro des messages
+- Frimousses :leon: :fleon: :hop: et :poivron:
 
 Fonctionnalités admin :
 - Accès à une page d'administration
@@ -20,4 +21,5 @@ Fonctionnalités admin :
 
 Amusez vous bien :)
 
-
+Crédits :
+Merci à Léo (Exvilia) pour les frimousses leon et fleon
