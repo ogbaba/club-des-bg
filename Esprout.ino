@@ -230,7 +230,7 @@ void setup() {
   server.on("/"ADMIN_URL, handleAdmin);
   server.on("/merde", handleMerde);
   server.on("/", handleRoot);
-  server.on("/msg", handleMessage);
+  server.on("/msg",HTTP_POST, handleMessage);
   server.onNotFound(handleNotFound);
   server.begin();
   Serial.println("HTTP server started");
