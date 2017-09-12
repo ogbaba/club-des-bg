@@ -179,10 +179,9 @@ void handleAdmin () {
     if (server.argName(0) == "msgAdmin")
     {
       verifTailleMsgs();
-      String msg = server.arg(0);
-      msg = formatMsg(msg);
+      String msg = formatMsg(server.arg(0));
       chat = chat + "<b>N*" + nbMsgReel + " " + timeClient.getFormattedTime() + 
-    " ADMIN</b><br> <p style=\"color:red;\">" + server.arg(0) + "</p> <hr>";    
+    " ADMIN</b><br> <pre style=\"color:red;\">" + msg + "</pre> <hr>";    
       ++nbMsgAff;
       ++nbMsgReel;
     }
