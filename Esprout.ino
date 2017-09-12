@@ -15,9 +15,6 @@ IPAddress subnet(255, 255, 255, 0);
 //#define THEWIFISSID "ssid"
 //#define THEWIFIPWD "mdp"
 
-struct timespec *tp;
-
-
 String header = "<head>\
 <title>Club des BG</title>\
 <meta charset=\"UTF-8\">\
