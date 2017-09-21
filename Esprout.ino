@@ -27,13 +27,20 @@ body { background-color : Lavender; font-size: 150%;}\
 .hop { background-image : url("HOP");}\
 .leon { background-image : url("LEON");}\
 .fleon { background-image : url("FLEON");}\
+.fribouton {text-decoration : none; color : black; background-color : WhiteSmoke;}\
 </style>\
+<script>\
+function ajoutAuMsg(txt) {\
+var txtBoite = document.getElementById(\"message\");\
+txtBoite.value = txtBoite.value + txt;\
+}\
+</script>\
 </head>";
 
 String texteBase = "<div id=\"ecriture\">\
 <h1>&#128023; Le club des BG &#128023; </h1>\
 <form action=\"/\">\
-<input type=\"submit\" style=\"height:50px;width:100px\" value=\"Rafraichir\" />\
+<input type=\"submit\" style=\"height:80px;width:200px\" value=\"Rafraichir\" />\
 </form>\
 <a href=\"/merde\">Merde</a>\
 <p>ERREUR : Accès Interdit, vous n'etes pas un bg</p>\
@@ -41,7 +48,12 @@ String texteBase = "<div id=\"ecriture\">\
 URL de l'image : <br>\
 <input type=\"url\" maxlength=\"200\" name=\"image\"> <br>\
 Message : <br>\
-<textarea name=\"message\" maxlength=\"500\" cols=\"60\" rows=\"4\"></textarea><br>\
+<a class=\"fribouton\" href=\"#\" onclick=\"ajoutAuMsg(&quot;:hop:&quot;)\">:hop: <div class=\"hop\"></div> </a>\
+<a class=\"fribouton\" href=\"#\" onclick=\"ajoutAuMsg(&quot;:leon:&quot;)\">:leon: <div class=\"leon\"></div> </a>\
+<a class=\"fribouton\" href=\"#\" onclick=\"ajoutAuMsg(&quot;:fleon:&quot;)\">:fleon: <div class=\"fleon\"></div> </a>\
+<a class=\"fribouton\" href=\"#\" onclick=\"ajoutAuMsg(&quot;:poivron:&quot;)\">:poivron: <div class=\"poivron\"> </div></a>\
+<br>\
+<textarea id=\"message\" name=\"message\" maxlength=\"500\" cols=\"60\" rows=\"4\"></textarea><br>\
 <input type=\"submit\" value=\"Envoyer\">\
 </form></div><hr>";
 
@@ -68,7 +80,7 @@ Merde: <br>\
 
 String chat;
 String merde = "Rien ici... Pour l'instant...";
-String epingle;
+String epingle = "<p>Salut et Tulas !</p>";
 
 int nbMsgAff = 0;
 int nbMsgReel = 0;

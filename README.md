@@ -11,6 +11,7 @@ Fonctionnalités utilisateur :
 - Effacement des messages après 20 messages
 - Numéro des messages
 - Frimousses :leon: :fleon: :hop: et :poivron:
+- Cliquer sur la frimousse l'ajoute au message
 
 Fonctionnalités admin :
 - Accès à une page d'administration
